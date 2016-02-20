@@ -1,7 +1,7 @@
 function startGame() {
-	queryQuestions();
+	//queryQuestions();
 			//generateQuestions();
-	return;
+	//return;
 var xmlhttp = new XMLHttpRequest();
 var url = "http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True";
 
@@ -22,8 +22,12 @@ xmlhttp.send();
 var categoryId;
 
 function parseCategories(arr) {
+	alert("Hi");
     var out = "";
     var i;
+	var elementHolder = document.createElement("div");
+	elementHolder.className = "btn-group";
+
     for(i = 0; i < arr.length; i++) {
 		console.log("Found " + arr[i].Name);
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
@@ -32,12 +36,12 @@ function parseCategories(arr) {
 		var element = document.createElement("input");
 		element.i = i;
 		element.arr = arr[i].Children;
-		element.type = "button"
+		element.type = "btn btn-secondary";
 		element.name = arr[i];
 		element.value = arr[i].Name;
 		element.onclick = categoryClickListener;
-		
-		document.getElementById("id01").appendChild(element);
+		elementHolder.appendChild(element);
+		document.getElementById("quizSelection").appendChild(elementHolder);
     }
     //document.getElementById("id01").innerHTML = out;
 }
@@ -49,7 +53,7 @@ function categoryClickListener() {
 function parseGenres(arr) {
 	var i;
 	//console.dir(arr);
-	document.getElementById("id01").innerHTML = "";
+	document.getElementById("quizSelection").innerHTML = "";
 	//console.dir(arr);
 	for(i = 0; i < arr.length; i++) {
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
@@ -64,7 +68,7 @@ function parseGenres(arr) {
 			queryQuestions();
 			generateQuestions();
 		}
-		document.getElementById("id01").appendChild(element);
+		document.getElementById("quizSelection").appendChild(element);
     }
 }
 var productDataArray;
