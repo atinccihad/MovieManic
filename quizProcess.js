@@ -37,30 +37,35 @@ function processQuiz() {
 		tableBody.appendChild(elementHolder);
 		
 		var productInfo = showRelatedMedia(answerIds[i]);
-		var title = productInfo[0];
-		var description = productInfo[1];
-		var image = productInfo[2];	
-		var relatedElementHolder = document.createElement("div");
-		relatedElementHolder.className = "row";
-		var rehInfo = document.createElement("div");
-		rehInfo.className = "col-md-4";
-		var rehInfo2 = document.createElement("div");
-		rehInfo2.className = "col-md-4";
-		var relatedElementHeader = document.createElement("h4");
-		relatedElementHeader.innerHTML = title;
-		var relatedElementDesc = document.createElement("div");
-		relatedElementDesc.className = "container";
-		relatedElementDesc.innerHTML = description;
-		var imageE = document.createElement("img");
-		imageE.src = image;
-		imageE.width = "200";
-		imageE.height = "200";
-		rehInfo.appendChild(relatedElementHeader);
-		rehInfo.appendChild(relatedElementDesc);
-		rehInfo2.appendChild(imageE);
-		relatedElementHolder.appendChild(rehInfo);
-		relatedElementHolder.appendChild(rehInfo2);
-		document.getElementById("relatedResults").appendChild(relatedElementHolder);
+		if (productInfo != null) {
+			var title = productInfo[0];
+			var description = productInfo[1];
+			var image = productInfo[2];	
+			var overall = document.createElement("div");
+			overall.className = "container spaced-out";
+			var relatedElementHolder = document.createElement("div");
+			relatedElementHolder.className = "row";
+			var rehInfo = document.createElement("div");
+			rehInfo.className = "col-md-4";
+			var rehInfo2 = document.createElement("div");
+			rehInfo2.className = "col-md-4";
+			var relatedElementHeader = document.createElement("h4");
+			relatedElementHeader.innerHTML = title;
+			var relatedElementDesc = document.createElement("div");
+			relatedElementDesc.className = "container";
+			relatedElementDesc.innerHTML = description;
+			var imageE = document.createElement("img");
+			imageE.src = image;
+			imageE.width = "200";
+			imageE.height = "200";
+			rehInfo.appendChild(relatedElementHeader);
+			rehInfo.appendChild(relatedElementDesc);
+			rehInfo2.appendChild(imageE);
+			relatedElementHolder.appendChild(rehInfo);
+			relatedElementHolder.appendChild(rehInfo2);
+			overall.appendChild(relatedElementHolder);
+			document.getElementById("relatedResults").appendChild(overall);
+		}
 	}
 	
 	document.getElementById("quizResultHolder").style.display = "block";

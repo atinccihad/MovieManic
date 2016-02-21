@@ -274,10 +274,13 @@ function showRelatedMedia(mediaId) {
 	var retval = [];
 	var i;
 	//for(i = 0; i < product.Susggestions.length; i++) {
-		var related = retrieveProduct(product.Suggestions[0]);
-		retval.push(related.Name);
-		retval.push(related.ShortDescription);
-		retval.push(related.ThumbnailUrl);
+	if (product.Suggestions == null)
+		return null;
+	
+	var related = retrieveProduct(product.Suggestions[0]);
+	retval.push(related.Name);
+	retval.push(related.ShortDescription);
+	retval.push(related.ThumbnailUrl);
 	//}
 	return retval;
 }
