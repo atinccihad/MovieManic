@@ -106,8 +106,12 @@ function generateQuestions() {
 		correctAnswers[i] = answerProduct.Name;
 		generateQuestion(questionIds[i],answerProduct);
 	}
+	var submitButtonHolder = document.createElement("div");
+	submitButtonHolder.className = "form-group";
+	submitButtonHolder.innerHTML = "<input class='btn btn-info' type='button' onclick='processQuiz()' value='Submit Quiz'>";
+	document.getElementById("quizForm").appendChild(submitButtonHolder);
 	
-	storeQuizProcessingInfo(questionIds,answerProduct.ShortDescription,correctAnswers)
+	storeQuizProcessingInfo(questionIds,correctAnswers)
 }
 
 function generateQuestion(questionId,answerProduct) {
