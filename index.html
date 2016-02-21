@@ -18,8 +18,18 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     <style>
-		.center_align {
-			text-align: center;
+		.navbar {
+			background: #3788a3;
+		}
+		.navbar-header {
+			background: #3788a3;
+		}
+		.navbar-header .navbar-brand {
+			background: #3788a3;
+            color: #edfaff;
+			font-style: bold;
+			font-size: 25px;
+			text-align: center-left;
 		}
 		.medium-blue {
 			background-color: #caedf9
@@ -41,7 +51,7 @@
 		}
         body {
 			background-color: #e6f9ff;
-            padding-top: 20px;
+            padding-top: 50px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -52,7 +62,19 @@
 	</head>
 
 <body>
-    <h1 class="center_align">Movie Maniac</h1>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="index.html">Movie Maniac</a>
+        </div>
+      </div>
+    </nav>
+
+	
+    <!--<h1 class="center_align">Movie Maniac</h1>-->
 
     <div class="container">
         <h2>Welcome to all encompassing trivia.</h2>
