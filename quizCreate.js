@@ -95,14 +95,24 @@ xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+Math.random().toStrin
 }
 
 function generateQuestions() {	
-	var questionIds = ["Question 1"];
+	var questionIds;
 	var correctAnswers;
 	
+	//Does not check for unique products yet
+	for (var i = 0; i < 5; i++) {
+		var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+		questionIds[i] = "Question " + i;
+		correctAnswer[i] = answerProduct.Name;
+		generateQuestion(answerProduct);
+	}
+	
+	storeQuizProcessingInfo(questionIds,correctAnswers)
+}
+
+function generateQuestion(answerProduct) {
 	var answers = [];
-	var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 	var questionText = answerProduct.ShortDescription;
 	var correctAnswer = answerProduct.Name;
-	correctAnswers[0] = correctAnswer;
 	
 	var i;
 	for(i = 0; i < 3; i++) {
@@ -110,9 +120,7 @@ function generateQuestions() {
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-
 	createQuizQuestion("Question 1","Which movie?",questionText,answers,correctAnswer);
-	storeQuizProcessingInfo(questionIds,correctAnswers)
 }
 
 function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
