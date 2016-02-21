@@ -234,7 +234,11 @@ function retrieveProduct(id) {
 function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
 	var question = document.createElement("div");
 	question.id = questionId;
-	question.innerHTML = questionName + " " + questionText;
+	var questionNumber = parseInt(questionId.substr(9)) + 1;
+	question.innerHTML = "Question " + questionNumber + ": " + questionName;
+	var questionP = document.createElement("div");
+	questionP.innerHTML = questionText;
+	question.appendChild(questionP);
 	for (i = 0; i < answers.length; i++) {
 		var elementDiv = document.createElement("div");
 		elementDiv.className = "form-control radio";
