@@ -159,7 +159,7 @@ function generateQuestion(questionId,answerProduct) {
 // probably unnecessary function
 function findProduct(previous=[]) {
 		var product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
-		var productDetail = retrieveProduct(product.Id);
+		
 		var count = 10;
 		// filter out non movies products
 		while(count > 0 && (previous.includes(product.Name) || product.Name.toLowerCase().includes("bundle") || product.Name.toLowerCase().includes("collection"))) {
@@ -167,7 +167,8 @@ function findProduct(previous=[]) {
 			product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 			count--;
 		}
-	return product;
+		var productDetail = retrieveProduct(product.Id);
+	return productDetail;
 }
 
 function retrieveProduct(id) {
@@ -177,7 +178,7 @@ function retrieveProduct(id) {
 	xmlhttp.onreadystatechange = function() {
   	  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			//alert(xmlhttp.responseText);
-      	  	myArr = JSON.parse(xmlhttp.responseText);
+      	  	myArr = JSON.parse(xmlhttp.responseText).Product;
 			//console.dir(myArr["Product"]);
       	  //parseCategories(myArr["Categories"]);
     	}
