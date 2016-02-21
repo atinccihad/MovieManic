@@ -67,7 +67,6 @@ function parseGenres(arr) {
 			//parseCategories(arr[i]["Children"]);
 			//alert(arr[id].Name);
 			queryQuestions();
-			generateQuestions();
 		}
 		document.getElementById("quizSelection").appendChild(element);
     }
@@ -97,13 +96,28 @@ xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+Math.random().toStrin
 
 function generateQuestions() {
 	var answers = [];
-	var answerProduct;
-	
-	
+	var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+	var questionText = answerProduct.ShortDescription;
+	var correctAnswer = answerProduct.Name;
 	
 	var i;
 	for(i = 0; i < 3; i++) {
-		answers.push(productDataArray[Math.floor(Math.random() * productDataArray.length)].IndexName);
+		answers.push(productDataArray[Math.floor(Math.random() * productDataArray.length)].Name);
 	}
+	answers.push(correctAnswer);
+	shuffle(answers);
 	
+	createQuizQuestion("Which movie?",questionText,answers,correctAnswer);
+}
+
+function shuffle(o) {
+  var j, x, i;
+  for (i = o.length; i; i -= 1) {
+    j = Math.floor(Math.random() * i);
+    x = o[i-1];
+    o[i-1] = o[j];
+    o[j] = x;
+  }
+
+  return o;
 }

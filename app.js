@@ -35,7 +35,7 @@ function addToString(c,d) {
 	string += c;
 }
 
-function createQuizQuestion(questionName,questionText,answers,questionHolder = "quizForm") {
+function createQuizQuestion(questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
 	var question = document.createElement("div");
 	question.id = "questionName"
 	question.innerHTML = questionText;
