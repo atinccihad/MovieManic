@@ -103,13 +103,13 @@ function generateQuestions() {
 		var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 		questionIds[i] = "Question " + i;
 		correctAnswers[i] = answerProduct.Name;
-		generateQuestion(answerProduct);
+		generateQuestion(questionIds[i],answerProduct);
 	}
 	
 	storeQuizProcessingInfo(questionIds,correctAnswers)
 }
 
-function generateQuestion(answerProduct) {
+function generateQuestion(questionId,answerProduct) {
 	var answers = [];
 	var questionText = answerProduct.ShortDescription;
 	var correctAnswer = answerProduct.Name;
@@ -120,7 +120,7 @@ function generateQuestion(answerProduct) {
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-	createQuizQuestion("Question 1","Which movie?",questionText,answers,correctAnswer);
+	createQuizQuestion(questionId,"Which movie?",questionText,answers,correctAnswer);
 }
 
 function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
