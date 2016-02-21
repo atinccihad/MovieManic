@@ -23,6 +23,21 @@ function processQuiz() {
 		tableBody.appendChild(elementHolder);
 	}
 	document.getElementById("quizResultHolder").style.display = "block";
+	resetElement = document.createElement("input");
+	resetElement.onclick = resetQuiz;
+	resetElement.className = "btn btn-info";
+	resetElement.value = "Take another quiz";
+	document.getElementById("quizResultHolder").appendChild(resetElement);
+}
+
+function resetQuiz() {
+	questionIds = [];
+	questions = [];
+	rightAnswers = [];
+	document.getElementById("quizCreation").innerHTML = getPreviousCategoryHTML();
+	document.getElementById("quizResultHolder").style.display = "none";
+	var blankQuizHTML = "<form class='form-group' method='post' id='quizForm' action='javascript:processQuiz()'></form>"
+	document.getElementById("quiz").innerHTML = blankQuizHTML;
 }
 
 function storeQuizProcessingInfo(qIds, ans) {

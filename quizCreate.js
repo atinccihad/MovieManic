@@ -1,22 +1,29 @@
+var previousCategoryHTML;
+
+function getPreviousCategoryHTML() {
+	return previousCategoryHTML;
+}
+
 function startGame() {
 	//queryQuestions();
-			//generateQuestions();
+	//generateQuestions();
 	//return;
-var xmlhttp = new XMLHttpRequest();
-var url = "http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True";
+	var xmlhttp = new XMLHttpRequest();
+	var url = "http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True";
 
-xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		//alert(xmlhttp.responseText);
-        var myArr = JSON.parse(xmlhttp.responseText);
-		//alert(myArr["Categories"][0]["Children"][0]["Name"]);
-		//alert(myArr["Categories"][0]["Children"][0]["Id"]);
-        parseCategories(myArr["Categories"]);
-		//console.dir(myArr);
-    }
-};
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			//alert(xmlhttp.responseText);
+			var myArr = JSON.parse(xmlhttp.responseText);
+			//alert(myArr["Categories"][0]["Children"][0]["Name"]);
+			//alert(myArr["Categories"][0]["Children"][0]["Id"]);
+			previousCategoryHTML = document.getElementById("quizCreation").innerHTML;
+			parseCategories(myArr["Categories"]);
+			//console.dir(myArr);
+		}
+	};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
 }
 
 var categoryId;
@@ -25,6 +32,7 @@ function parseCategories(arr) {
     var out = "";
     var i;
 	var elementHolder = document.createElement("div");
+	
 	document.getElementById("quizCreation").innerHTML = "";
 	elementHolder.className = "btn-group";
 
@@ -43,6 +51,7 @@ function parseCategories(arr) {
 		elementHolder.appendChild(element);
 		document.getElementById("quizCreation").appendChild(elementHolder);
     }
+	makeBackButton(previousCategoryHTML);
     //document.getElementById("id01").innerHTML = out;
 }
 
@@ -52,6 +61,22 @@ function categoryClickListener() {
 }
 
 var genreId;
+
+function makeBackButton(prevHTML) {
+	var backElement = document.createElement("input");
+	backElement.id = "selectionBackButton";
+	backElement.className = "btn btn-secondary btn-default";
+	backElement.value = "Back";
+	backElement.type = "button";
+	backElement.onclick = goBackInSelection;
+	backElement.name = prevHTML;
+	document.getElementById("quizCreation").appendChild(backElement);
+	//alert(prevPrevHTML);
+}
+
+function goBackInSelection() {
+	document.getElementById("quizCreation").innerHTML = previousCategoryHTML;
+}
 
 function parseGenres(arr) {
 	var i;
@@ -68,6 +93,8 @@ function parseGenres(arr) {
 		element.onclick = genreClickListener;
 		document.getElementById("quizCreation").appendChild(element);
     }
+	//alert(evenMorePreviousCategoryHTML);
+	makeBackButton(previousCategoryHTML);
 }
 
 function genreClickListener() {
@@ -194,8 +221,6 @@ function shuffle(o) {
 function openQuiz() {
 	if (document.getElementById("quiz").style.display == "none") {
 		document.getElementById("quiz").style.display = "block";
-	} else {
-		document.getElementById("quiz").style.display = "none";
 	}
 }
 
