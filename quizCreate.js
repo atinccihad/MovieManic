@@ -82,11 +82,8 @@ var url = "https://services.sls1.cdops.net/Subscriber/SearchProducts";
 
 xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		//alert(xmlhttp.responseText);
         productDataArray = JSON.parse(xmlhttp.responseText).Products;
-		console.dir(productDataArray);
 		generateQuestions();
-        //myFunction(myArr["Categories"]);
     }
 };
 xmlhttp.open("POST", url, true);
@@ -94,11 +91,8 @@ xmlhttp.open("POST", url, true);
 xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 xmlhttp.setRequestHeader("CD-DistributionChannel", "20389393-b2e4-4f65-968e-75a5227e544c");
 xmlhttp.setRequestHeader("CD-SystemId", "e5ce3167-4e0b-4867-a8c3-c8f23aec5e71")
-var data = "{\"Categories\": ["+genreId+"]}";
-xmlhttp.send(data);
-//xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+"star"+"\"");
+xmlhttp.send("{\"Categories\": ["+genreId+"]}");
 }
-//Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1)
 function generateQuestions() {	
 	var questionIds = [];
 	var correctAnswers = [];
@@ -123,27 +117,29 @@ function generateQuestion(questionId,answerProduct) {
 	var questionText = answerProduct.ShortDescription;
 	var correctAnswer = answerProduct.Name;
 	
+	var regex = new RegExp( '(' + correctAnswer + ')', 'gi' );
+	questionText = questionText.replace(regex, "[title]");
+	
 	var i;
 	for(i = 0; i < 3; i++) {
-		answers.push(findProduct().Name);
+		answers.push(findProduct(answers).Name);
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-	createQuizQuestion(questionId,"What movie?",questionText,answers,correctAnswer);
+	createQuizQuestion(questionId,"What movie?\n",questionText,answers,correctAnswer);
 }
 
-function findProduct() {
-	var product = null;
-	var productDetail = null;
-	var count = 0;
-	//while(count < 3 && (!productDetail || productDetail.Genre != genre)) {
-		product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
-		//console.log(product.Id);
-		console.dir(product);
-		//productDetail = retrieveProduct(product.Id);
-		//console.log(productDetail.Genre);
-		//count++;
-	//}
+// probably unnecessary function
+function findProduct(previous=[]) {
+		var product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+		var productDetail = retrieveProduct(product.Id);
+		var count = 10;
+		// filter out non movies products
+		while(count > 0 && (previous.includes(product.Name) || product.Name.toLowerCase().includes("bundle") || product.Name.toLowerCase().includes("collection"))) {
+			// TODO: not recurse forever
+			product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+			count--;
+		}
 	return product;
 }
 
@@ -155,13 +151,13 @@ function retrieveProduct(id) {
   	  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			//alert(xmlhttp.responseText);
       	  	myArr = JSON.parse(xmlhttp.responseText);
-			console.dir(myArr["Product"]);
+			//console.dir(myArr["Product"]);
       	  //parseCategories(myArr["Categories"]);
     	}
 	};
 	xmlhttp.open("GET", url, false);
 	xmlhttp.send();
-	console.log("All done!");
+
 	return myArr;
 }
 
