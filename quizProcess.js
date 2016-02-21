@@ -2,7 +2,7 @@ var questionIds;
 var rightAnswers;
 
 function processQuiz() {
-	var results; //A true or false for whether the question was answered correctly.
+	var results = []; //A true or false for whether the question was answered correctly.
 	for (var i = 0; i < questionIds.length; i++) {
 		var question = document.getElementById(questionIds[i]);
 		var radios = question.getElementsById(questionIds[i]);
