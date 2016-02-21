@@ -22,7 +22,6 @@ xmlhttp.send();
 var categoryId;
 
 function parseCategories(arr) {
-	alert("Hi");
     var out = "";
     var i;
 	var elementHolder = document.createElement("div");
@@ -36,7 +35,8 @@ function parseCategories(arr) {
 		var element = document.createElement("input");
 		element.i = i;
 		element.arr = arr[i].Children;
-		element.type = "btn btn-secondary";
+		element.type = "button";
+		element.className = "btn btn-secondary btn-default";
 		element.name = arr[i];
 		element.value = arr[i].Name;
 		element.onclick = categoryClickListener;
@@ -59,7 +59,8 @@ function parseGenres(arr) {
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
 //        arr[i].Name + '</a><br>';
 		var element = document.createElement("input");
-		element.type = "button"
+		element.type = "button";
+		element.className = "btn btn-secondary btn-default";
 		element.name = Number(i);
 		element.value = arr[i].Name;
 		element.onclick = function() {

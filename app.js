@@ -37,7 +37,6 @@ function addToString(c,d) {
 
 function createQuizQuestion(questionName,questionText,answers,questionHolder = "quizForm") {
 	var question = document.createElement("div");
-	question.className = "form-group";
 	question.id = "questionName"
 	question.innerHTML = questionText;
 	for (i = 0; i < answers.length; i++) {
@@ -47,7 +46,7 @@ function createQuizQuestion(questionName,questionText,answers,questionHolder = "
 		var element = document.createElement("input");
 		//element.className = "form-control";
 		//alert(answers[i] + "  " + element.innerHTML);
-		elementHolder.innerHTML = "<input type='radio' name='" + questionName + " " + i + "'>" + answers[i];
+		elementHolder.innerHTML = "<input type='radio' name='" + questionName + "' id='" + i + "'>" + answers[i];
 		elementDiv.appendChild(elementHolder);
 		question.appendChild(elementDiv);
 	}
