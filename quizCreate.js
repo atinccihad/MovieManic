@@ -50,6 +50,8 @@ function categoryClickListener() {
 	parseGenres(this.arr);
 }
 
+var genre;
+
 function parseGenres(arr) {
 	var i;
 	document.getElementById("quizSelection").innerHTML = "";
@@ -68,7 +70,7 @@ function parseGenres(arr) {
 }
 
 function genreClickListener() {
-	genreId = this.genreId;
+	genre = this.genre;
 	queryQuestions();
 }
 
@@ -86,15 +88,15 @@ xmlhttp.onreadystatechange = function() {
         //myFunction(myArr["Categories"]);
     }
 };
-xmlhttp.open("GET", url, true);
+xmlhttp.open("POST", url, true);
 
 xmlhttp.setRequestHeader("CD-DistributionChannel", "20389393-b2e4-4f65-968e-75a5227e544c");
 xmlhttp.setRequestHeader("CD-SystemId", "e5ce3167-4e0b-4867-a8c3-c8f23aec5e71");
 
 
-xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1)+"\"");
+//xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+"star"+"\"");
 }
-
+//Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1)
 function generateQuestions() {	
 	var questionIds = [];
 	var correctAnswers = [];
@@ -129,7 +131,36 @@ function generateQuestion(questionId,answerProduct) {
 }
 
 function findProduct() {
-	return productDataArray[Math.floor(Math.random() * productDataArray.length)];
+	var product = null;
+	var productDetail = null;
+	var count = 0;
+	//while(count < 3 && (!productDetail || productDetail.Genre != genre)) {
+		product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+		//console.log(product.Id);
+		console.dir(product);
+		//productDetail = retrieveProduct(product.Id);
+		//console.log(productDetail.Genre);
+		//count++;
+	//}
+	return product;
+}
+
+function retrieveProduct(id) {
+	var xmlhttp = new XMLHttpRequest();
+	var url = "http://metadata.sls1.cdops.net/Product/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/Id/"+id;
+	var myArr;
+	xmlhttp.onreadystatechange = function() {
+  	  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			//alert(xmlhttp.responseText);
+      	  	myArr = JSON.parse(xmlhttp.responseText);
+			console.dir(myArr["Product"]);
+      	  //parseCategories(myArr["Categories"]);
+    	}
+	};
+	xmlhttp.open("GET", url, false);
+	xmlhttp.send();
+	console.log("All done!");
+	return myArr;
 }
 
 function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
