@@ -34,23 +34,3 @@ xmlhttp.send();
 function addToString(c,d) {
 	string += c;
 }
-
-function createQuizQuestion(questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
-	var question = document.createElement("div");
-	question.id = "questionName"
-	question.innerHTML = questionText;
-	for (i = 0; i < answers.length; i++) {
-		var elementDiv = document.createElement("div");
-		elementDiv.className = "radio";
-		var elementHolder = document.createElement("label");
-		var element = document.createElement("input");
-		//element.className = "form-control";
-		//alert(answers[i] + "  " + element.innerHTML);
-		elementHolder.innerHTML = "<input type='radio' name='" + questionName + "' id='" + i + "'>" + answers[i];
-		elementDiv.appendChild(elementHolder);
-		question.appendChild(elementDiv);
-	}
-	document.getElementById(questionHolder).appendChild(question);
-}
-
-createQuizQuestion("TestQuestion","What is the answer?",["answer1","answer2"]);

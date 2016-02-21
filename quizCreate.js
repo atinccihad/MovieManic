@@ -94,11 +94,15 @@ xmlhttp.setRequestHeader("CD-SystemId", "e5ce3167-4e0b-4867-a8c3-c8f23aec5e71");
 xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1)+"\"");
 }
 
-function generateQuestions() {
+function generateQuestions() {	
+	var questionIds = ["Question 1"];
+	var correctAnswers;
+	
 	var answers = [];
 	var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 	var questionText = answerProduct.ShortDescription;
 	var correctAnswer = answerProduct.Name;
+	correctAnswers[0] = correctAnswer;
 	
 	var i;
 	for(i = 0; i < 3; i++) {
@@ -106,8 +110,27 @@ function generateQuestions() {
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-	
-	createQuizQuestion("Which movie?",questionText,answers,correctAnswer);
+
+	createQuizQuestion("Question 1","Which movie?",questionText,answers,correctAnswer);
+	storeQuizProcessingInfo(questionIds,correctAnswers)
+}
+
+function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
+	var question = document.createElement("div");
+	question.id = questionId;
+	question.innerHTML = questionName + " " + questionText;
+	for (i = 0; i < answers.length; i++) {
+		var elementDiv = document.createElement("div");
+		elementDiv.className = "radio";
+		var elementHolder = document.createElement("label");
+		var element = document.createElement("input");
+		//element.className = "form-control";
+		//alert(answers[i] + "  " + element.innerHTML);
+		elementHolder.innerHTML = "<input type='radio' name='" + questionId + "' value='" + answers[i] + "'>" + answers[i];
+		elementDiv.appendChild(elementHolder);
+		question.appendChild(elementDiv);
+	}
+	document.getElementById(questionHolder).appendChild(question);
 }
 
 function shuffle(o) {
