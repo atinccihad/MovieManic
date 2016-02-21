@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,15 +18,30 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     <style>
-        .navbar-custom {
-            color: #FFFFFF;
+		.center_align {
+			text-align: center;
+		}
+		.medium-blue {
+			background-color: #caedf9
+		}
+        .navbar-custom-blue {
+            color: #3788a3;
+			background-color: #3788a3;
+            font-size: 20px;
+        }
+		.navbar-custom {
+            color: #3788a3;
+			background-color: #3788a3;
             margin-top: 5px;
             margin-right: 15px;
             font-size: 20px;
         }
-
+		.navbar-default {
+			background-color: #157290;
+		}
         body {
-            padding-top: 50px;
+			background-color: #e6f9ff;
+            padding-top: 20px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -36,25 +52,11 @@
 	</head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Movie Maniac</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-            </div>
-        </div>
-    </nav>
+    <h1 class="center_align">Movie Maniac</h1>
 
     <div class="container">
-        <h1>Welcome to all encompassing trivia.</h1>
-		<div class="jumbotron">
+        <h2>Welcome to all encompassing trivia.</h2>
+		<div class="jumbotron medium-blue">
 			<div id="quizCreation" class="container">
 				<input class="btn btn-info" type="button" onclick="startGame()" value="Choose your trivia topic"></input>
 				<!--<a class="btn btn-success" href="http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True">To Query</a>-->
@@ -62,7 +64,7 @@
 			
 		</div>
 		
-		<div class="jumbotron" id="quizHolder" style="display:block">	
+		<div class="jumbotron medium-blue" id="quizHolder" style="display:block">	
 			<div class="container">
 				<input class="btn btn-info" type="button" onclick="openQuiz()" value="Take Quiz"></input>
 			</div>
@@ -72,7 +74,7 @@
 			</div>
 		</div>
 		
-		<div class="jumbotron" id="quizResultHolder" style="display:none">
+		<div class="jumbotron medium-blue" id="quizResultHolder" style="display:none">
 			<div class="container">
 				<h2>Results</h2>
 				<div class="table-responsive">
