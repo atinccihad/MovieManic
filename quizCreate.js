@@ -1,6 +1,14 @@
 var previousCategoryHTML;
 // reduce bandwidth
 var basicLoad = true;
+
+function toggleBasicLoad() {
+	var tempVal = document.getElementById("loadTimeOption").name;
+	document.getElementById("loadTimeOption").name = document.getElementById("loadTimeOption").value;
+	document.getElementById("loadTimeOption").value = tempVal;
+	basicLoad = !basicLoad;
+}
+
 function getPreviousCategoryHTML() {
 	return previousCategoryHTML;
 }
@@ -226,7 +234,7 @@ function createQuizQuestion(questionId,questionName,questionText,answers,correct
 	question.innerHTML = questionName + " " + questionText;
 	for (i = 0; i < answers.length; i++) {
 		var elementDiv = document.createElement("div");
-		elementDiv.className = "form-control";
+		elementDiv.className = "form-control radio";
 		var elementHolder = document.createElement("label");
 		var element = document.createElement("input");
 		//element.className = "form-control";

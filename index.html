@@ -18,6 +18,14 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     <style>
+		.radio {
+			background-color: #f6e09c;
+			font-style: italic;
+		}
+		input {
+			margin-top: 3px;
+			margin-bottom: 3px;
+		}
 		.navbar {
 			background: #3788a3;
 		}
@@ -48,6 +56,13 @@
         }
 		.navbar-default {
 			background-color: #157290;
+		}
+		ul {
+			padding: 0;
+			list-style-type: none;
+		}
+		li {
+			list-style-type: none;
 		}
         body {
 			background-color: #e6f9ff;
@@ -88,9 +103,12 @@
 		</div>
 		
 		<div class="jumbotron medium-blue" id="quizHolder" style="display:block">	
-		<p>Take your quiz</p>
+		<p>Choose between different quiz options</p>
 			<div class="container">
-				<input class="btn btn-info" type="button" onclick="openQuiz()" value="Take Quiz"></input>
+				<ul>
+					<li><input id="loadTimeOption" class="btn btn-info" type="button" onclick="toggleBasicLoad()" name="Standardize Question Types (shorter load time)" value="Diversify Question Types (longer load time)"></li>
+					<li><input class="btn btn-info" type="button" onclick="openQuiz()" value="Take Quiz"></input></li>
+				</ul>
 			</div>
 			<div class="container" id="quiz" style="display:none">
 				<form class="form-group" method="post" id="quizForm" action="javascript:processQuiz()">

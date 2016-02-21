@@ -11,7 +11,7 @@ function processQuiz() {
 	for (i = 0; i < results.length; i++) {
 		var elementHolder = document.createElement("tr");
 		var elementIndex = document.createElement("td");
-		elementIndex.innerHTML = i;
+		elementIndex.innerHTML = i + 1;
 		var elementC = document.createElement("td");
 		elementC.innerHTML = results[i];
 		var elementA = document.createElement("td");
