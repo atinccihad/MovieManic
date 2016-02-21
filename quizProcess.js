@@ -4,6 +4,9 @@ var rightAnswers;
 
 function processQuiz() {
 	var results = checkAnswers();
+	if (results == null) {
+		return;
+	}
 	var tableBody = document.getElementById("quizResults");
 	for (i = 0; i < results.length; i++) {
 		var elementHolder = document.createElement("tr");
@@ -28,12 +31,14 @@ function storeQuizProcessingInfo(qIds, ans) {
 }
 
 function checkAnswers() {
+	var isAnswered = false;
 	var results = []; //A true or false for whether the question was answered correctly.
 	for (var i = 0; i < questionIds.length; i++) {
 		var question = document.getElementById(questionIds[i]);
 		var radios = document.getElementsByName(questionIds[i]);
 		for (j = 0; j < radios.length; j++) {
 			if (radios[j].checked) {
+				isAnswered = true;
 				answer = radios[j].value;
 				if (rightAnswers[i] == answer) {
 					results[i] = true;
@@ -42,6 +47,10 @@ function checkAnswers() {
 			}
 			results[i] = false;
 		}
+		if (!isAnswered) {
+			return null;
+		}
+		isAnswered = false;
 	}
 	return results;
 }
