@@ -156,7 +156,7 @@ function generateQuestion(questionId,answerProduct) {
 	
 	var correctAnswer = answerProduct.Name;
 	
-	var regex = new RegExp( '(' + correctAnswer + ')', 'gi' );
+	var regex = new RegExp( '(' + correctAnswer.split(":")[0] + ')', 'gi' );
 	questionText = questionText.replace(regex, "[title]");
 	answers.push(correctAnswer);
 	var i;
