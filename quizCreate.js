@@ -1,5 +1,5 @@
 var previousCategoryHTML;
-
+var basicLoad = true;
 function getPreviousCategoryHTML() {
 	return previousCategoryHTML;
 }
@@ -135,13 +135,15 @@ function generateQuestions() {
 	submitButtonHolder.className = "form-group";
 	submitButtonHolder.innerHTML = "<input class='btn btn-info' type='button' onclick='processQuiz()' value='Submit Quiz'>";
 	document.getElementById("quizForm").appendChild(submitButtonHolder);
-	
+	console.log("Done loading");
 	storeQuizProcessingInfo(questionIds,correctAnswers)
 }
 
 function generateQuestion(questionId,answerProduct) {
 	var answers = [];
-	var questionText = answerProduct.ShortDescription;
+	var question = getQuestionText(answerProduct);
+	var questionText = question[1];
+	
 	var correctAnswer = answerProduct.Name;
 	
 	var regex = new RegExp( '(' + correctAnswer + ')', 'gi' );
@@ -153,7 +155,33 @@ function generateQuestion(questionId,answerProduct) {
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-	createQuizQuestion(questionId,"What movie?\n",questionText,answers,correctAnswer);
+	createQuizQuestion(questionId,question[0],questionText,answers,correctAnswer);
+}
+
+function getQuestionText(product) {
+	var retval = ["Which movie matches this description?", product.Name];
+	var typeIndex = Math.floor(Math.random() * 5);
+	if(typeIndex == 0) {
+		retval[1] = product.Description;
+	} 
+	if(typeIndex == 1 || basicLoad) {
+		retval[1] = product.ShortDescription;
+	} 
+	if(typeIndex == 2) {
+		retval[1] = product.SnippetDescription;
+	}
+	if(typeIndex == 3) {
+		retval[0] = "Which movie matches this tagline?";
+		retval[1] = product.Tagline;
+	}
+	if(typeIndex == 4) {
+		retval[0] = "Which movie was released on this date?";
+		retval[1] = product.ReleaseDate;
+	}
+	if(!retval[1]) {
+		return getQuestionText(product);
+	}
+	return retval;
 }
 
 // probably unnecessary function
@@ -167,6 +195,7 @@ function findProduct(previous=[]) {
 			product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 			count--;
 		}
+		if(basicLoad) return product;
 		var productDetail = retrieveProduct(product.Id);
 	return productDetail;
 }
