@@ -224,7 +224,7 @@ function createQuizQuestion(questionId,questionName,questionText,answers,correct
 	question.innerHTML = questionName + " " + questionText;
 	for (i = 0; i < answers.length; i++) {
 		var elementDiv = document.createElement("div");
-		elementDiv.className = "radio";
+		elementDiv.className = "form-control";
 		var elementHolder = document.createElement("label");
 		var element = document.createElement("input");
 		//element.className = "form-control";
