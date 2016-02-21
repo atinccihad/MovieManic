@@ -1,6 +1,7 @@
 var previousCategoryHTML;
 // reduce bandwidth
 var basicLoad = true;
+var numQuestions = 5;
 
 function toggleBasicLoad() {
 	var tempVal = document.getElementById("loadTimeOption").name;
@@ -131,14 +132,15 @@ function generateQuestions() {
 	var questionIds = [];
 	var correctAnswers = [];
 	var answerIds = [];
-	//Does not check for unique products yet
-	for (var i = 0; i < 5; i++) {
+
+	for (var i = 0; i < numQuestions; i++) {
 		var answerProduct = findProduct();
 		questionIds[i] = "Question " + i;
 		correctAnswers[i] = answerProduct.Name;
 		answerIds[i] = answerProduct.Id;
 		generateQuestion(questionIds[i],answerProduct);
 	}
+	
 	var submitButtonHolder = document.createElement("div");
 	submitButtonHolder.className = "form-group";
 	submitButtonHolder.innerHTML = "<input class='btn btn-info' type='button' onclick='processQuiz()' value='Submit Quiz'>";
@@ -197,14 +199,13 @@ function getQuestionText(product) {
 	return retval;
 }
 
-// probably unnecessary function
 function findProduct(previous=[]) {
 		var product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 		
+		// max recursion (safety only, should never be reached)
 		var count = 10;
 		// filter out non movies products
 		while(count > 0 && (previous.indexOf(product.Name) >= 0 || product.Name.toLowerCase().indexOf("bundle") >= 0 || product.Name.toLowerCase().indexOf("collection") >= 0)) {
-			// TODO: not recurse forever
 			product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 			count--;
 		}
@@ -220,10 +221,7 @@ function retrieveProduct(id) {
 	var myArr;
 	xmlhttp.onreadystatechange = function() {
   	  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			//alert(xmlhttp.responseText);
       	  	myArr = JSON.parse(xmlhttp.responseText).Product;
-			//console.dir(myArr["Product"]);
-      	  //parseCategories(myArr["Categories"]);
     	}
 	};
 	xmlhttp.open("GET", url, false);
@@ -245,8 +243,6 @@ function createQuizQuestion(questionId,questionName,questionText,answers,correct
 		elementDiv.className = "form-control radio";
 		var elementHolder = document.createElement("label");
 		var element = document.createElement("input");
-		//element.className = "form-control";
-		//alert(answers[i] + "  " + element.innerHTML);
 		elementHolder.innerHTML = "<input type='radio' name='" + questionId + "' value='" + answers[i] + "'>" + answers[i];
 		elementDiv.appendChild(elementHolder);
 		question.appendChild(elementDiv);
@@ -273,5 +269,13 @@ function openQuiz() {
 }
 
 function showRelatedMedia(mediaId) {
-	
+	var product = retrieveProduct(mediaId);
+	console.dir(product.Suggestions);
+	var i;
+	//for(i = 0; i < product.Susggestions.length; i++) {
+		var related = product.Suggestions[0];
+		var title = related.Name;
+		var description = related.ShortDescription;
+		var imageURL = related.ThumbnailUrl;
+	//}
 }
