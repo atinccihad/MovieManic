@@ -6,14 +6,6 @@ function openQuizCreation() {
 	}
 }
 
-function openQuiz() {
-	if (document.getElementById("quiz").style.display == "none") {
-		document.getElementById("quiz").style.display = "block";
-	} else {
-		document.getElementById("quiz").style.display = "none";
-	}
-}
-
 var url = "http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True";
 var string = "Text: ";
 

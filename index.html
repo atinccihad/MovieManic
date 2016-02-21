@@ -55,16 +55,11 @@
     <div class="container">
         <h1>Welcome to all encompassing trivia.</h1>
 		<div class="jumbotron">
-			<div class="container">
-				<input class="btn btn-info" type="button" onclick="openQuizCreation()" value="Choose your trivia topic"></input>
+			<div id="quizCreation" class="container">
+				<input class="btn btn-info" type="button" onclick="startGame()" value="Choose your trivia topic"></input>
 				<!--<a class="btn btn-success" href="http://metadata.sls1.cdops.net/Categories/SystemId/e5ce3167-4e0b-4867-a8c3-c8f23aec5e71/DistributionChannel/20389393-b2e4-4f65-968e-75a5227e544c/IncludeChildren/True">To Query</a>-->
 			</div>
 			
-			<div class="container" id="quizCreation" style="display:none">
-				<div id="quizSelection">
-					<button type="button" class="btn btn-info" onclick="startGame()">All Categories</button>
-				</div>
-			</div>
 		</div>
 		
 		<div class="jumbotron" id="quizHolder" style="display:block">	

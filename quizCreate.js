@@ -25,6 +25,7 @@ function parseCategories(arr) {
     var out = "";
     var i;
 	var elementHolder = document.createElement("div");
+	document.getElementById("quizCreation").innerHTML = "";
 	elementHolder.className = "btn-group";
 
     for(i = 0; i < arr.length; i++) {
@@ -40,7 +41,7 @@ function parseCategories(arr) {
 		element.value = arr[i].Name;
 		element.onclick = categoryClickListener;
 		elementHolder.appendChild(element);
-		document.getElementById("quizSelection").appendChild(elementHolder);
+		document.getElementById("quizCreation").appendChild(elementHolder);
     }
     //document.getElementById("id01").innerHTML = out;
 }
@@ -54,7 +55,7 @@ var genre;
 
 function parseGenres(arr) {
 	var i;
-	document.getElementById("quizSelection").innerHTML = "";
+	document.getElementById("quizCreation").innerHTML = "";
 	for(i = 0; i < arr.length; i++) {
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
 //        arr[i].Name + '</a><br>';
@@ -65,7 +66,7 @@ function parseGenres(arr) {
 		element.name = arr[i].Name;
 		element.value = arr[i].Name;
 		element.onclick = genreClickListener;
-		document.getElementById("quizSelection").appendChild(element);
+		document.getElementById("quizCreation").appendChild(element);
     }
 }
 
@@ -192,3 +193,12 @@ function shuffle(o) {
 
   return o;
 }
+
+function openQuiz() {
+	if (document.getElementById("quiz").style.display == "none") {
+		document.getElementById("quiz").style.display = "block";
+	} else {
+		document.getElementById("quiz").style.display = "none";
+	}
+}
+
