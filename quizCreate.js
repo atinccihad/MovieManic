@@ -51,7 +51,7 @@ function categoryClickListener() {
 	parseGenres(this.arr);
 }
 
-var genre;
+var genreId;
 
 function parseGenres(arr) {
 	var i;
@@ -71,7 +71,7 @@ function parseGenres(arr) {
 }
 
 function genreClickListener() {
-	genre = this.genre;
+	genreId = this.genreId;
 	queryQuestions();
 }
 
@@ -84,17 +84,18 @@ xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 		//alert(xmlhttp.responseText);
         productDataArray = JSON.parse(xmlhttp.responseText).Products;
-		//console.dir(productDataArray);
+		console.dir(productDataArray);
 		generateQuestions();
         //myFunction(myArr["Categories"]);
     }
 };
 xmlhttp.open("POST", url, true);
 
+xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 xmlhttp.setRequestHeader("CD-DistributionChannel", "20389393-b2e4-4f65-968e-75a5227e544c");
-xmlhttp.setRequestHeader("CD-SystemId", "e5ce3167-4e0b-4867-a8c3-c8f23aec5e71");
-
-
+xmlhttp.setRequestHeader("CD-SystemId", "e5ce3167-4e0b-4867-a8c3-c8f23aec5e71")
+var data = "{\"Categories\": ["+genreId+"]}";
+xmlhttp.send(data);
 //xmlhttp.send("{\"Categories\":[3338],\"SearchString\",:\""+"star"+"\"");
 }
 //Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1)
