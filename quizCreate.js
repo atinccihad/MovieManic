@@ -1,4 +1,5 @@
 var previousCategoryHTML;
+// reduce bandwidth
 var basicLoad = true;
 function getPreviousCategoryHTML() {
 	return previousCategoryHTML;
@@ -148,12 +149,12 @@ function generateQuestion(questionId,answerProduct) {
 	
 	var regex = new RegExp( '(' + correctAnswer + ')', 'gi' );
 	questionText = questionText.replace(regex, "[title]");
-	
+	answers.push(correctAnswer);
 	var i;
 	for(i = 0; i < 3; i++) {
 		answers.push(findProduct(answers).Name);
 	}
-	answers.push(correctAnswer);
+	
 	shuffle(answers);
 	createQuizQuestion(questionId,question[0],questionText,answers,correctAnswer);
 }
@@ -190,11 +191,12 @@ function findProduct(previous=[]) {
 		
 		var count = 10;
 		// filter out non movies products
-		while(count > 0 && (previous.includes(product.Name) || product.Name.toLowerCase().includes("bundle") || product.Name.toLowerCase().includes("collection"))) {
+		while(count > 0 && (previous.indexOf(product.Name) >= 0 || product.Name.toLowerCase().indexOf("bundle") >= 0 || product.Name.toLowerCase().indexOf("collection") >= 0)) {
 			// TODO: not recurse forever
 			product = productDataArray[Math.floor(Math.random() * productDataArray.length)];
 			count--;
 		}
+		if(count == 0) console.log("Timed out retrieving valid product!");
 		if(basicLoad) return product;
 		var productDetail = retrieveProduct(product.Id);
 	return productDetail;
