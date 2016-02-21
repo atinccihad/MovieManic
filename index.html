@@ -13,11 +13,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+	
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     <style>
+		.center-left-align {
+			text-align: center-left;
+		}
 		.radio {
 			background-color: #f6e09c;
 			font-style: italic;
@@ -56,9 +62,6 @@
         }
 		.navbar-default {
 			background-color: #157290;
-		}
-		.small-paragraph p {
-			font-size: 12px;
 		}
 		ul {
 			padding: 0;
@@ -129,7 +132,6 @@
 							<th>#</th>
 							<th>Correct</th>
 							<th>Correct Answer</th>
-							<th>Related Media</th>
 							<th>Purchase on Media Mojo</th>
 						  </tr>
 						</thead>
@@ -139,6 +141,10 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="jumbotron medium-blue" id="relatedResults" style="display:none">
+			<h2>Related</h2>
+		</div>
     </div>
 
 	<div class="container">
@@ -147,10 +153,6 @@
       </footer>
 	</div>
 	
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-
 </body>
 
 </html>

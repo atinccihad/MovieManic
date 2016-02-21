@@ -270,14 +270,14 @@ function openQuiz() {
 
 function showRelatedMedia(mediaId) {
 	var product = retrieveProduct(mediaId);
-	console.dir(product.Suggestions);
+	//console.dir(product.Suggestions);
 	var retval = [];
 	var i;
 	//for(i = 0; i < product.Susggestions.length; i++) {
-		var related = product.Suggestions[0];
+		var related = retrieveProduct(product.Suggestions[0]);
 		retval.push(related.Name);
 		retval.push(related.ShortDescription);
-		retval.push(elated.ThumbnailUrl);
+		retval.push(related.ThumbnailUrl);
 	//}
 	return retval;
 }

@@ -2,13 +2,19 @@ var questionIds;
 var questions;
 var rightAnswers;
 var answerIds;
+var processed = false;
+var relatedHtmlHolders;
 
 function processQuiz() {
+	if (processed)
+		return;
 	var results = checkAnswers();
 	if (results == null) {
 		return;
 	}
 	var tableBody = document.getElementById("quizResults");
+	relatedHtmlHolders = [];
+	
 	for (i = 0; i < results.length; i++) {
 		var elementHolder = document.createElement("tr");
 		var elementIndex = document.createElement("td");
@@ -17,29 +23,55 @@ function processQuiz() {
 		elementC.innerHTML = results[i];
 		var elementA = document.createElement("td");
 		elementA.innerHTML = rightAnswers[i];
-		var relatedHolder = document.createElement("td");
-		var related = document.createElement("input")
-		related.type = "button";
-		related.className = "btn btn-neutral btn-default";
-		$(related).on('click', showRelatedMedia(answerIds[i]));
-		related.onclick = showRelatedMedia;
-		relatedHolder.appendChild(related);
-		var elementLink = document.createElement("td");
-		elementLink.innerHTML = "http://content.sls1.cdops.net/storefront/HTML/Flex/5.6.1_CSGHackIllinois/product.html?productId=" + answerIds[i];
+		var elementLinkHolder = document.createElement("td");
+		var elementLink = document.createElement("a");
+		elementLink.className = "btn btn-secondary";
+		elementLink.innerHTML = "Purchase " + rightAnswers[i];
+		elementLink.href = "http://content.sls1.cdops.net/storefront/HTML/Flex/5.6.1_CSGHackIllinois/product.html?productId=" + answerIds[i];
+		elementLinkHolder.appendChild(elementLink);
 		
 		elementHolder.appendChild(elementIndex);
 		elementHolder.appendChild(elementC);
 		elementHolder.appendChild(elementA);
-		elementHolder.appendChild(relatedHolder);
-		elementHolder.appendChild(elementLink);
+		elementHolder.appendChild(elementLinkHolder);
 		tableBody.appendChild(elementHolder);
+		
+		var productInfo = showRelatedMedia(answerIds[i]);
+		var title = productInfo[0];
+		var description = productInfo[1];
+		var image = productInfo[2];	
+		var relatedElementHolder = document.createElement("div");
+		relatedElementHolder.className = "row";
+		var rehInfo = document.createElement("div");
+		rehInfo.className = "col-md-4";
+		var rehInfo2 = document.createElement("div");
+		rehInfo2.className = "col-md-4";
+		var relatedElementHeader = document.createElement("h4");
+		relatedElementHeader.innerHTML = title;
+		var relatedElementDesc = document.createElement("div");
+		relatedElementDesc.className = "container";
+		relatedElementDesc.innerHTML = description;
+		var imageE = document.createElement("img");
+		imageE.src = image;
+		imageE.width = "200";
+		imageE.height = "200";
+		rehInfo.appendChild(relatedElementHeader);
+		rehInfo.appendChild(relatedElementDesc);
+		rehInfo2.appendChild(imageE);
+		relatedElementHolder.appendChild(rehInfo);
+		relatedElementHolder.appendChild(rehInfo2);
+		document.getElementById("relatedResults").appendChild(relatedElementHolder);
 	}
+	
 	document.getElementById("quizResultHolder").style.display = "block";
+	document.getElementById("relatedResults").style.display = "block";
 	resetElement = document.createElement("input");
 	resetElement.onclick = resetQuiz;
 	resetElement.className = "btn btn-info";
 	resetElement.value = "Take another quiz";
 	document.getElementById("quizResultHolder").appendChild(resetElement);
+	processed = true;
+	
 }
 
 function resetQuiz() {
@@ -47,9 +79,12 @@ function resetQuiz() {
 	questions = [];
 	rightAnswers = [];
 	document.getElementById("quizCreation").innerHTML = getPreviousCategoryHTML();
+	document.getElementById("relatedResults").innerHTML = "<h2>Related</h2>";
 	document.getElementById("quizResultHolder").style.display = "none";
+	document.getElementById("relatedResults").style.display = "none";
 	var blankQuizHTML = "<form class='form-group' method='post' id='quizForm' action='javascript:processQuiz()'></form>"
 	document.getElementById("quiz").innerHTML = blankQuizHTML;
+	processed = false;
 }
 
 function storeQuizProcessingInfo(qIds, ans,aIds) {
