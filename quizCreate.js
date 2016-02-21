@@ -28,16 +28,15 @@ function parseCategories(arr) {
 	elementHolder.className = "btn-group";
 
     for(i = 0; i < arr.length; i++) {
-		console.log("Found " + arr[i].Name);
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
 //        arr[i].Name + '</a><br>';
 
 		var element = document.createElement("input");
-		element.i = i;
+		element.categoryId = arr[i].Id;
 		element.arr = arr[i].Children;
 		element.type = "button";
 		element.className = "btn btn-secondary btn-default";
-		element.name = arr[i];
+		element.name = arr[i].Name;
 		element.value = arr[i].Name;
 		element.onclick = categoryClickListener;
 		elementHolder.appendChild(element);
@@ -47,30 +46,32 @@ function parseCategories(arr) {
 }
 
 function categoryClickListener() {
+	categoryId = this.categoryId;
 	parseGenres(this.arr);
 }
 
 function parseGenres(arr) {
 	var i;
-	//console.dir(arr);
 	document.getElementById("quizSelection").innerHTML = "";
-	//console.dir(arr);
 	for(i = 0; i < arr.length; i++) {
 //        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
 //        arr[i].Name + '</a><br>';
 		var element = document.createElement("input");
+		element.genreId = arr[i].Id;
 		element.type = "button";
 		element.className = "btn btn-secondary btn-default";
-		element.name = Number(i);
+		element.name = arr[i].Name;
 		element.value = arr[i].Name;
-		element.onclick = function() {
-			//parseCategories(arr[i]["Children"]);
-			//alert(arr[id].Name);
-			queryQuestions();
-		}
+		element.onclick = genreClickListener;
 		document.getElementById("quizSelection").appendChild(element);
     }
 }
+
+function genreClickListener() {
+	genreId = this.genreId;
+	queryQuestions();
+}
+
 var productDataArray;
 function queryQuestions() {
 	var xmlhttp = new XMLHttpRequest();
@@ -100,7 +101,7 @@ function generateQuestions() {
 	
 	//Does not check for unique products yet
 	for (var i = 0; i < 5; i++) {
-		var answerProduct = productDataArray[Math.floor(Math.random() * productDataArray.length)];
+		var answerProduct = findProduct();
 		questionIds[i] = "Question " + i;
 		correctAnswers[i] = answerProduct.Name;
 		generateQuestion(questionIds[i],answerProduct);
@@ -116,11 +117,15 @@ function generateQuestion(questionId,answerProduct) {
 	
 	var i;
 	for(i = 0; i < 3; i++) {
-		answers.push(productDataArray[Math.floor(Math.random() * productDataArray.length)].Name);
+		answers.push(findProduct().Name);
 	}
 	answers.push(correctAnswer);
 	shuffle(answers);
-	createQuizQuestion(questionId,"Which movie?",questionText,answers,correctAnswer);
+	createQuizQuestion(questionId,"What movie?",questionText,answers,correctAnswer);
+}
+
+function findProduct() {
+	return productDataArray[Math.floor(Math.random() * productDataArray.length)];
 }
 
 function createQuizQuestion(questionId,questionName,questionText,answers,correctAnswer,questionHolder = "quizForm") {
