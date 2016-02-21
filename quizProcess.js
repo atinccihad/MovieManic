@@ -1,6 +1,7 @@
 var questionIds;
 var questions;
 var rightAnswers;
+var answerIds;
 
 function processQuiz() {
 	var results = checkAnswers();
@@ -16,10 +17,21 @@ function processQuiz() {
 		elementC.innerHTML = results[i];
 		var elementA = document.createElement("td");
 		elementA.innerHTML = rightAnswers[i];
+		var relatedHolder = document.createElement("td");
+		var related = document.createElement("input")
+		related.type = "button";
+		related.className = "btn btn-neutral btn-default";
+		$(related).on('click', showRelatedMedia(answerIds[i]));
+		related.onclick = showRelatedMedia;
+		relatedHolder.appendChild(related);
+		var elementLink = document.createElement("td");
+		elementLink.innerHTML = "http://content.sls1.cdops.net/storefront/HTML/Flex/5.6.1_CSGHackIllinois/product.html?productId=" + answerIds[i];
 		
 		elementHolder.appendChild(elementIndex);
 		elementHolder.appendChild(elementC);
 		elementHolder.appendChild(elementA);
+		elementHolder.appendChild(relatedHolder);
+		elementHolder.appendChild(elementLink);
 		tableBody.appendChild(elementHolder);
 	}
 	document.getElementById("quizResultHolder").style.display = "block";
@@ -40,9 +52,10 @@ function resetQuiz() {
 	document.getElementById("quiz").innerHTML = blankQuizHTML;
 }
 
-function storeQuizProcessingInfo(qIds, ans) {
+function storeQuizProcessingInfo(qIds, ans,aIds) {
 	questionIds = qIds;
 	rightAnswers = ans;
+	answerIds = aIds;
 }
 
 function checkAnswers() {

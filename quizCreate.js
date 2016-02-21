@@ -130,12 +130,13 @@ xmlhttp.send("{\"Categories\": ["+genreId+"]}");
 function generateQuestions() {	
 	var questionIds = [];
 	var correctAnswers = [];
-	
+	var answerIds = [];
 	//Does not check for unique products yet
 	for (var i = 0; i < 5; i++) {
 		var answerProduct = findProduct();
 		questionIds[i] = "Question " + i;
 		correctAnswers[i] = answerProduct.Name;
+		answerIds[i] = answerProduct.Id;
 		generateQuestion(questionIds[i],answerProduct);
 	}
 	var submitButtonHolder = document.createElement("div");
@@ -143,7 +144,7 @@ function generateQuestions() {
 	submitButtonHolder.innerHTML = "<input class='btn btn-info' type='button' onclick='processQuiz()' value='Submit Quiz'>";
 	document.getElementById("quizForm").appendChild(submitButtonHolder);
 	console.log("Done loading");
-	storeQuizProcessingInfo(questionIds,correctAnswers)
+	storeQuizProcessingInfo(questionIds,correctAnswers,answerIds)
 }
 
 function generateQuestion(questionId,answerProduct) {
@@ -271,3 +272,6 @@ function openQuiz() {
 	}
 }
 
+function showRelatedMedia(mediaId) {
+	
+}
