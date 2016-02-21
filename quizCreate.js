@@ -1,6 +1,6 @@
 var previousCategoryHTML;
 // reduce bandwidth
-var basicLoad = true;
+var basicLoad = false;
 function getPreviousCategoryHTML() {
 	return previousCategoryHTML;
 }
@@ -38,9 +38,6 @@ function parseCategories(arr) {
 	elementHolder.className = "btn-group";
 
     for(i = 0; i < arr.length; i++) {
-//        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
-//        arr[i].Name + '</a><br>';
-
 		var element = document.createElement("input");
 		element.categoryId = arr[i].Id;
 		element.arr = arr[i].Children;
@@ -83,8 +80,9 @@ function parseGenres(arr) {
 	var i;
 	document.getElementById("quizCreation").innerHTML = "";
 	for(i = 0; i < arr.length; i++) {
-//        out += '<a href="' + arr[i].ThumbnailUrl + '">' +
-//        arr[i].Name + '</a><br>';
+		if(arr[i].Name == "Movie Bundles") {
+			continue;
+		}
 		var element = document.createElement("input");
 		element.genreId = arr[i].Id;
 		element.type = "button";
@@ -160,24 +158,29 @@ function generateQuestion(questionId,answerProduct) {
 }
 
 function getQuestionText(product) {
-	var retval = ["Which movie matches this description?", product.Name];
-	var typeIndex = Math.floor(Math.random() * 5);
+	var retval = ["Which movie matches this description?", null];
+	var typeIndex = Math.floor(Math.random() * 6);
 	if(typeIndex == 0) {
 		retval[1] = product.Description;
-	} 
-	if(typeIndex == 1 || basicLoad) {
+	} else if(typeIndex == 1 || basicLoad) {
 		retval[1] = product.ShortDescription;
-	} 
-	if(typeIndex == 2) {
+	} else if(typeIndex == 2) {
 		retval[1] = product.SnippetDescription;
-	}
-	if(typeIndex == 3) {
+	} else if(typeIndex == 3) {
 		retval[0] = "Which movie matches this tagline?";
 		retval[1] = product.Tagline;
-	}
-	if(typeIndex == 4) {
+	} else if(typeIndex == 4 && product.ReleaseDate) {
 		retval[0] = "Which movie was released on this date?";
-		retval[1] = product.ReleaseDate;
+		retval[1] = product.ReleaseDate.substring(5, 7) + "/" + product.ReleaseDate.substring(8, 10) + "/" + product.ReleaseDate.substring(0, 4);
+	} else if(typeIndex == 5 && product.People) {
+		retval[0] = "Which movie featured the following people?";
+		var people = "";
+		var i;
+		for(i = 0; i < product.People.length; i++) {
+			people += product.People[i].DisplayName;
+			if(i < product.People.length - 1) people += ", ";
+		}
+		retval[1] = people;
 	}
 	if(!retval[1]) {
 		return getQuestionText(product);
